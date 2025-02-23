@@ -50,7 +50,7 @@ export const generateAiResponse = async (
     return { code: 400, message: "Something went wrong" };
   }
 
-  let finalPrompt = getPrompt(vibe,prompt,gitInfo);
+  const finalPrompt:string = getPrompt(vibe,prompt,gitInfo);
   const response = await POST(finalPrompt.toString(), model);
 
 return { code: 200, message: response };
