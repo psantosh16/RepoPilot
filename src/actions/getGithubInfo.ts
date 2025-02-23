@@ -32,7 +32,7 @@ export async function fetchGithubUserData(username: string): Promise<GithubUserD
         if (!userData || !reposData) {
             console.error("Failed to fetch GitHub data.");
             return {
-                user: [],
+                user: null,
                 repos: [],
                 status: { code: 500, message: "Failed to fetch GitHub data." },
             }
@@ -50,21 +50,19 @@ export async function fetchGithubUserData(username: string): Promise<GithubUserD
             bio: userData.bio,
         };
 
-        const repos: GithubRepo[] = reposData.map((repo: any) => ({
+        const slicedRepos: number = reposData.length > 10 ? 10 : reposData.length;
+
+        const repos: GithubRepo[] = reposData.slice(0, slicedRepos).map((repo: any) => ({
             name: repo.name,
             description: repo.description,
-            language: repo.language,
-            topics: repo.topics || [],
+            language: repo.language + repo.topics ? repo.topics : [],
         }));
-        console.clear();
         console.log("GitHub user data fetched successfully.");
-        console.log("User:", user);
-
         return { user, repos, status: { code:200 , message: "Data fetched successfully" } };
     } catch (error) {
         console.error("Error fetching GitHub user data:", error);
         return {
-            user: [],
+            user: null,
             repos: [],
             status: { code: 500, message: "Error fetching GitHub user data." },
         }

@@ -1,38 +1,40 @@
-// TODO: Need to implement prompt selection based on vibe and add user data to prompt
-
-/*
- 1. Predefined Prompts based on Vibe
- 2. Add data from users github and custom prompt of user
- 3. Generate bio based on vibe,custom prompt and user data
- */
-
 "use server";
 
 import { GithubUserData, ResponseStatus } from "@/types/github";
 import { Intelligence } from "@/types/intelligence";
+import { Vibe } from "@/types/prompt";
+import { getPrompt } from "@/utils/prompts";
 import axios from "axios";
+
+const POST = async (data: string, model: Intelligence): Promise<string> => { 
+  
+  const payload:string = JSON.stringify({
+    "model": model == Intelligence.MISTRAL ? "mistralai/mistral-small-24b-instruct-2501:free" : "deepseek/deepseek-r1:free",
+    "messages": [
+      {"role": "user", "content": data + "Don't add text formating. Just give proper spaces. Text for Readme.md in 30 words or less. Decription of 40 words or less. Use appropriate emojies. Provide me in following format only: Title: \n\nDescription: \n\nTech Stack: \n\nGithub Link: "}
+    ],
+    "top_p": 1,
+    "temperature": 0.85,
+    "repetition_penalty": 1
+  })
+
+  const baseUri = "https://openrouter.ai/api/v1/chat/completions";
+  const res = await axios.post(baseUri, payload, {
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + process.env.NEXT_PUBLIC_OPENROUTER_API_KEY,
+    },
+  });
+  console.log("Data from AI: ",res.data.choices[0].message.content);
+  return res.data.choices[0].message.content;
+};
 
 export const generateAiResponse = async (
   prompt: string,
-  vibe: string,
+  vibe: Vibe,
   gitInfo: GithubUserData,
-  ai: Intelligence
+  model: Intelligence
 ): Promise<ResponseStatus> => {
-  // Base URI's
-  let geminiUri =
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
-  const mistralUri = "https://api.mistral.ai/v1/chat/completions";
-
-  // Both have Content-Type : application/json
-  // geminiUri we can include key in link itself
-  //in bodywe need to add "content":[{
-  //  "parts":[{
-  // "text": "prompt"
-  // }]}]
-
-  // mistralUri we need to include Bearer $api_key in authorization header
-  // Accept: application/json in headers
-  // also need to addd model, message :{ role: "user", "content": "prompt"}  in body
 
   if (prompt.length === 0 || prompt === undefined) {
     return { code: 400, message: "Prompt cannot be empty" };
@@ -44,58 +46,13 @@ export const generateAiResponse = async (
     return { code: 400, message: "Github Username cannot be empty" };
   }
 
-  if (ai === null || ai === undefined) {
+  if (model === null || model === undefined) {
     return { code: 400, message: "Something went wrong" };
   }
 
-  // Generating BIO
-  if (ai === Intelligence.GEMINI) {
-    if (
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY === undefined ||
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY === null
-    )
-      throw new Error("Missing Gemini API Key in environment variables");
+  let finalPrompt = getPrompt(vibe,prompt,gitInfo);
+  const response = await POST(finalPrompt.toString(), model);
 
-    geminiUri = `${geminiUri}?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`;
-      const payload = {
+return { code: 200, message: response };
 
-      content: [
-        {
-          parts: [
-            {
-              text: `This is what i want : ${prompt}. Here is the data from your github profile : ${gitInfo.user?.bio}` //TODO: Change this 
-            },
-          ],
-        },
-      ],
-    };
-
-      try {
-        console.log("Sending request to Gemini:  ",geminiUri);
-      const response = await axios.post(geminiUri, {
-        content: [
-          {
-            parts: [
-              {
-                text: `Generate an github bio of 20 words in short. My details are as :- I am ${gitInfo.user?.name} and I am ${gitInfo.user?.blog}. I live in ${gitInfo.user?.location}, and my github id is ${gitInfo.user?.html_url}`.toString() , //TODO: Change this
-              },
-            ],
-          },
-        ],
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-        if (response.status != 200) {
-          return { code: 400, message: response.data };
-        }
-        console.log(response.data);
-      return { code: 200, message: response.data };
-    } catch (error) {
-      return { code: 500, message: `Internal Server Error: ${error}` };
-    }
-  }
-
-  return { code: 501, message: "Something went wrong internally!" };
 };

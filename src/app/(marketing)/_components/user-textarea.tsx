@@ -14,13 +14,8 @@ import { GithubUserData, ResponseStatus } from "@/types/github";
 import { Intelligence } from "@/types/intelligence";
 import { generateAiResponse } from "@/actions/generateAiResponse";
 import axios from "axios";
+import { Vibe } from "@/types/prompt";
 
-enum Vibe {
-  PROFESSIONAL = "Professional",
-  FUNNY = "Funny",
-  CASUAL = "Casual",
-  CREATIVE = "Creative",
-}
 
 enum VerificationStatus {
   VERIFIED = "Verified",
@@ -88,7 +83,7 @@ const BioGenerator: React.FC = () => {
 
   const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout>();
 
-  const handleSubmitData = () => {
+  const handleSubmitData = async () => {
     if (isDisabled || isLoading) return;
     if (prompt.length === 0) {
       alert("Please enter your prompt or hobby.");
@@ -98,36 +93,25 @@ const BioGenerator: React.FC = () => {
     if (submitTimeout) clearTimeout(submitTimeout);
     
     const selectedAI:Intelligence = localStorage.getItem("agent") as Intelligence;
-    // TODO: Add to prompt and send to the backend [prompt, selectedVibe, githubInfo, selectedAI - from localhost]
-    const timeoutId = setTimeout(async () => {
+    setIsLoading(true);
+    try {
       if (selectedAI && githubInfo && prompt && selectedVibe) {
-        const res = await axios.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyB14F9I58XFLIQY-j4YYsJ2PLgmS1fRO68",
-          {
-            content: [
-              {
-                parts: [
-                  {
-                    text: `This is what i want : ${prompt}. Here is the data from your github profile : ${githubInfo.user?.bio}` //TODO: Change this 
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
 
-        )
-        if (res.status === 200) {
-          setResponseData(res.data);
-          console.log(res.data);
-        }
+      const res = await generateAiResponse(prompt, selectedVibe, githubInfo, selectedAI);
+      if (res.code === 200) {
+        setResponseData(res.message);
+      } else {
+        alert("Something went wrong. Please try again.");
       }
-    }, 1000);
+      }
+    } catch (error) {
+      alert("Error generating response. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+    // }, 1000);
 
-    setSubmitTimeout(timeoutId);
+    // setSubmitTimeout(timeoutId);
   };
 
   return (
@@ -291,7 +275,10 @@ const BioGenerator: React.FC = () => {
       {responseData && (
         <div className="bg-gray-100 p-6 rounded-lg">
           <p className="text-lg font-medium">Generated Bio</p>
-          <p className="text-gray-600 mt-2">{responseData}</p>
+          <p className="text-gray-600 mt-2"><strong>Title : </strong>{responseData.split("Title:")[1].split("Description:")[0]}</p>
+          <p className="text-gray-600 mt-2"><strong>Description : </strong>{responseData.split("Description:")[1].split("Tech Stack:")[0]}</p>
+          <p className="text-gray-600 mt-2"><strong>Tech Stack :</strong> {responseData.split("Tech Stack:")[1].split("Github Link:")[0]}</p>
+          <p className="text-gray-600 mt-2"><strong>Github Link :</strong> {responseData.split("Github Link:")[1]}</p>
         </div>
       )}
     </div>

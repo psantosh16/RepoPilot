@@ -1,4 +1,4 @@
 export enum Intelligence {
-    GEMINI = "GEMINI",
+    DEEPSEEK = "DEEPSEEK",
     MISTRAL = "MISTRAL",
 }
