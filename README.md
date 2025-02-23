@@ -4,11 +4,12 @@ RepoPilot is an AI-powered tool that generates unique and engaging GitHub bios, 
 
 ## Features
 
-* **AI-Powered Bio Generation:** Automatically create compelling bios using advanced AI algorithms.
-* **Repository Analysis:** Utilizes your GitHub repository data to tailor your bio.
-* **Custom Prompts:** Fine-tune your bio with custom prompts to add a personal touch.
-* **Customizable GIF Headers:** Add visually appealing and animated GIF headers to make your profile stand out.
-* **Easy to Use:** Simple and intuitive interface for seamless bio generation.
+- **AI-Powered Bio Generation:** Automatically create compelling bios using advanced AI algorithms.
+- **Repository Analysis:** Utilizes your GitHub repository data to tailor your bio.
+- **Custom Prompts:** Fine-tune your bio with custom prompts to add a personal touch.
+- **Customizable GIF Headers:** Add visually appealing and animated GIF headers to make your profile stand out.
+- **Easy to Use:** Simple and intuitive interface for seamless bio generation.
+
 ## Getting Started
 
 To get a local copy of the project up and running, follow these steps:
@@ -28,7 +29,7 @@ To get a local copy of the project up and running, follow these steps:
    ```
 
 2. **Install dependencies:**
- Using pnpm:
+   Using pnpm:
 
    ```bash
    pnpm install
@@ -54,12 +55,11 @@ pnpm run dev
 
 The application should now be running on [http://localhost:3000](http://localhost:3000).
 
-
 ## Usage Examples
 
-* **Generating a Basic Bio:** (Show an example of generating a bio with default settings.)
-* **Using Custom Prompts:** (Demonstrate how to use custom prompts to personalize the bio.)
-* **Adding a GIF Header:** (Explain how to add and customize GIF headers.)
+- **Generating a Basic Bio:** (Show an example of generating a bio with default settings.)
+- **Using Custom Prompts:** (Demonstrate how to use custom prompts to personalize the bio.)
+- **Adding a GIF Header:** (Explain how to add and customize GIF headers.)
 
 ## Contributing
 
@@ -70,17 +70,3 @@ We welcome contributions! If you'd like to contribute to RepoPilot, please follo
 3.  Make your changes and commit them.
 4.  Push your changes to your fork.
 5.  Submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` file for details.
-
-## Acknowledgments
-
-* (Mention any libraries, frameworks, or resources you used.)
-* (Thank any contributors or supporters.)
-
-## Contact
-
-* (Provide your contact information, such as email or social media links.)
-* (Link to your website or other relevant resources.)
