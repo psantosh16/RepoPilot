@@ -2,7 +2,7 @@
 
 RepoPilot is an AI-powered tool that generates unique and engaging GitHub bios, enhanced with customizable GIF headers. It analyzes your repositories, allows you to input custom prompts, and blends these elements to create a personalized profile that truly reflects your skills and projects.
 
-## Features
+### Features
 
 - **AI-Powered Bio Generation:** Automatically create compelling bios using advanced AI algorithms.
 - **Repository Analysis:** Utilizes your GitHub repository data to tailor your bio.
@@ -10,16 +10,16 @@ RepoPilot is an AI-powered tool that generates unique and engaging GitHub bios, 
 - **Customizable GIF Headers:** Add visually appealing and animated GIF headers to make your profile stand out.
 - **Easy to Use:** Simple and intuitive interface for seamless bio generation.
 
-## Getting Started
+### Getting Started
 
 To get a local copy of the project up and running, follow these steps:
 
-### Prerequisites
+#### Prerequisites
 
 - [Node.js](https://nodejs.org/en/download/) (v18 or later)
 - [pnpm](https://pnpm.io/installation)
 
-### Installation
+#### Installation
 
 1. **Clone the repository:**
 
@@ -55,13 +55,13 @@ pnpm run dev
 
 The application should now be running on [http://localhost:3000](http://localhost:3000).
 
-## Usage Examples
+### Usage Examples
 
 - **Generating a Basic Bio:** (Show an example of generating a bio with default settings.)
 - **Using Custom Prompts:** (Demonstrate how to use custom prompts to personalize the bio.)
 - **Adding a GIF Header:** (Explain how to add and customize GIF headers.)
 
-## Contributing
+### Contributing
 
 We welcome contributions! If you'd like to contribute to RepoPilot, please follow these steps:
 
