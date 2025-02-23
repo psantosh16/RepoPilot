@@ -9,27 +9,51 @@ RepoPilot is an AI-powered tool that generates unique and engaging GitHub bios, 
 * **Custom Prompts:** Fine-tune your bio with custom prompts to add a personal touch.
 * **Customizable GIF Headers:** Add visually appealing and animated GIF headers to make your profile stand out.
 * **Easy to Use:** Simple and intuitive interface for seamless bio generation.
-
 ## Getting Started
 
-1.  **Installation:** (Provide installation instructions here, e.g., cloning the repository, installing dependencies, etc.)
-    ```bash
-    # Example:
-    git clone https://github.com/psantosh16/RepoPilot.git
-    pnpm i # or yarn install or 
-    ```
-2.  **Configuration:** (Explain any necessary configuration steps, such as API keys, environment variables, etc.)
-    ```bash
-    # Example:
-    # Add your API key to .env file
-    # API_KEY=your_api_key
-    ```
-3.  **Usage:** (Provide clear instructions on how to use the tool, including examples.)
-    ```bash
-    # Example:
-    npm run start # or yarn start
-    # Or provide instructions on how to use the web interface, CLI, etc.
-    ```
+To get a local copy of the project up and running, follow these steps:
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/download/) (v18 or later)
+- [pnpm](https://pnpm.io/installation)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/psantosh16/RepoPilot.git
+   cd RepoPilot
+   ```
+
+2. **Install dependencies:**
+ Using pnpm:
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables:**
+
+   - Rename `.env.sample` to `.env`:
+
+     ```bash
+     mv .env.sample .env
+     ```
+
+   - Update the `.env` file with your credentials and any other necessary environment variables.
+
+4. **Start the development server:**
+
+With pnpm:
+
+```bash
+pnpm run dev
+```
+
+The application should now be running on [http://localhost:3000](http://localhost:3000).
+
 
 ## Usage Examples
 
