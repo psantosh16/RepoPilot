@@ -15,6 +15,7 @@ export interface GithubRepo {
     name: string;
     description: string | null;
     language: string | null | string[];
+    topics?: string[];
 }
 
 export interface ResponseStatus {

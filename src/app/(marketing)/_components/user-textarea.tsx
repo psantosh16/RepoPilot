@@ -10,10 +10,10 @@ import {
 import { ChevronUpIcon, CheckCircle, Loader2 } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { fetchGithubUserData } from "@/actions/getGithubInfo";
-import { GithubUserData, ResponseStatus } from "@/types/github";
+import { GithubUserData } from "@/types/github";
 import { Intelligence } from "@/types/intelligence";
 import { generateAiResponse } from "@/actions/generateAiResponse";
-import axios from "axios";
+// import axios from "axios";
 import { Vibe } from "@/types/prompt";
 
 
@@ -28,7 +28,7 @@ const BioGenerator: React.FC = () => {
   const [gitUsername, setGitUsername] = useState<string>("");
   const [selectedVibe, setSelectedVibe] = useState<Vibe>(Vibe.PROFESSIONAL);
   const [githubInfo, setGithubInfo] = useState<GithubUserData | null>(null);
-  const [responseData, setResponseData] = useState<String | null>(null);
+  const [responseData, setResponseData] = useState<string | null>(null);
 
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [isGithubUserValid, setIsGithubUserValid] =
@@ -66,6 +66,7 @@ const BioGenerator: React.FC = () => {
       setIsGithubUserValid(VerificationStatus.UNVERIFIED);
       setIsDisabled(true);
       setIsBulletMoved(false);
+      console.log("Error in Verifying Github User: ",error);
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +82,7 @@ const BioGenerator: React.FC = () => {
     }
   };
 
-  const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout>();
+  // const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout>();
 
   const handleSubmitData = async () => {
     if (isDisabled || isLoading) return;
@@ -90,7 +91,7 @@ const BioGenerator: React.FC = () => {
       return;
     }
 
-    if (submitTimeout) clearTimeout(submitTimeout);
+    // if (submitTimeout) clearTimeout(submitTimeout);
     
     const selectedAI:Intelligence = localStorage.getItem("agent") as Intelligence;
     setIsLoading(true);
@@ -106,6 +107,7 @@ const BioGenerator: React.FC = () => {
       }
     } catch (error) {
       alert("Error generating response. Please try again.");
+      console.log("Error in generating response: ", error);
     } finally {
       setIsLoading(false);
     }

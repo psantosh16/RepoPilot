@@ -22,7 +22,7 @@ const POST = async (data: string, model: Intelligence): Promise<string> => {
   const res = await axios.post(baseUri, payload, {
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + process.env.NEXT_PUBLIC_OPENROUTER_API_KEY,
+      "Authorization": "Bearer " + process.env.OPENROUTER_API_KEY,
     },
   });
   console.log("Data from AI: ",res.data.choices[0].message.content);
@@ -50,7 +50,7 @@ export const generateAiResponse = async (
     return { code: 400, message: "Something went wrong" };
   }
 
-  let finalPrompt = getPrompt(vibe,prompt,gitInfo);
+  const finalPrompt:string = getPrompt(vibe,prompt,gitInfo);
   const response = await POST(finalPrompt.toString(), model);
 
 return { code: 200, message: response };

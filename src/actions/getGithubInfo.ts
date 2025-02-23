@@ -52,10 +52,10 @@ export async function fetchGithubUserData(username: string): Promise<GithubUserD
 
         const slicedRepos: number = reposData.length > 10 ? 10 : reposData.length;
 
-        const repos: GithubRepo[] = reposData.slice(0, slicedRepos).map((repo: any) => ({
+        const repos: GithubRepo[] = reposData.slice(0, slicedRepos).map((repo: GithubRepo) => ({
             name: repo.name,
             description: repo.description,
-            language: repo.language + repo.topics ? repo.topics : [],
+            language: repo.language + '' + repo.topics,
         }));
         console.log("GitHub user data fetched successfully.");
         return { user, repos, status: { code:200 , message: "Data fetched successfully" } };
