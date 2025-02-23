@@ -28,7 +28,7 @@ export const HeroCount = async () => {
 
   return (
     <div className="border border-gray-200 rounded-xl px-2 py-0.5 mb-4 shadow-sm bg-slate-50 flex gap-x-1 text-slate-600 text-sm ">
-      <strong>{count !== null ? count : "10"}</strong> <p>bio's generated so far</p>
+      <strong>{count !== null ? count : "10"}</strong> <p>bios generated so far</p>
     </div>
   );
 };
