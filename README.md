@@ -1,4 +1,7 @@
+![RepoPilot - AI-Powered GitHub Bio Generator](https://github.com/user-attachments/assets/39e667f9-c0f9-44ee-957c-70aba3aa487b)
+
 # RepoPilot
+
 
 RepoPilot is an AI-powered tool that generates unique and engaging GitHub bios, enhanced with customizable GIF headers. It analyzes your repositories, allows you to input custom prompts, and blends these elements to create a personalized profile that truly reflects your skills and projects.
 
