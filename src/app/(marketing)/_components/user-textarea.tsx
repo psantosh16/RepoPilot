@@ -12,9 +12,9 @@ import { cn } from "@/utils/cn";
 import { fetchGithubUserData } from "@/actions/getGithubInfo";
 import { GithubUserData } from "@/types/github";
 import { Intelligence } from "@/types/intelligence";
-import { generateAiResponse } from "@/actions/generateAiResponse";
 // import axios from "axios";
 import { Vibe } from "@/types/prompt";
+import { updateViewCount } from "@/actions/updateViewCount";
 
 
 enum VerificationStatus {
@@ -82,28 +82,39 @@ const BioGenerator: React.FC = () => {
     }
   };
 
-  // const [submitTimeout, setSubmitTimeout] = useState<NodeJS.Timeout>();
-
   const handleSubmitData = async () => {
     if (isDisabled || isLoading) return;
     if (prompt.length === 0) {
       alert("Please enter your prompt or hobby.");
       return;
     }
-
-    // if (submitTimeout) clearTimeout(submitTimeout);
-    
-    const selectedAI:Intelligence = localStorage.getItem("agent") as Intelligence;
     setIsLoading(true);
+    const selectedAI: Intelligence = localStorage.getItem("agent") as Intelligence;
     try {
       if (selectedAI && githubInfo && prompt && selectedVibe) {
+        const res = await fetch('/api/ai/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt,
+            vibe: selectedVibe,
+            gitInfo: githubInfo,
+            selectedAi: selectedAI,
+          }),
+        }).then(response => response.json());
 
-      const res = await generateAiResponse(prompt, selectedVibe, githubInfo, selectedAI);
-      if (res.code === 200) {
-        setResponseData(res.message);
-      } else {
-        alert("Something went wrong. Please try again.");
-      }
+          if (res.code === 200) {
+          setResponseData(res.message);
+          if (githubInfo?.user && githubInfo.user.login && selectedAI) {
+            await updateViewCount(githubInfo.user.login,selectedAI);
+          } else {
+            console.log("Error No Github ID found.");
+          }
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
       }
     } catch (error) {
       alert("Error generating response. Please try again.");
@@ -111,9 +122,6 @@ const BioGenerator: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-    // }, 1000);
-
-    // setSubmitTimeout(timeoutId);
   };
 
   return (

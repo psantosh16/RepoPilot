@@ -9,9 +9,9 @@ import axios from "axios";
 const POST = async (data: string, model: Intelligence): Promise<string> => { 
   
   const payload:string = JSON.stringify({
-    "model": model == Intelligence.MISTRAL ? "mistralai/mistral-small-24b-instruct-2501:free" : "deepseek/deepseek-r1:free",
+    "model": model == Intelligence.MISTRAL ? "mistralai/mistral-small-24b-instruct-2501:free" : "meta-llama/llama-3.3-70b-instruct:free",
     "messages": [
-      {"role": "user", "content": data + "Don't add text formating. Just give proper spaces. Text for Readme.md in 30 words or less. Decription of 40 words or less. Use appropriate emojies. Provide me in following format only: Title: \n\nDescription: \n\nTech Stack: \n\nGithub Link: "}
+      {"role": "user", "content": data + "Don't add text formating. Just give proper spaces. Text for Readme.md in 30 words or less. Decription of 40 words or less. Use appropriate emojies. Provide me in following format only: Title:{Title} \n\nDescription:{Description} \n\nTech Stack:{Tech Stack} \n\nGithub Link:{Github Link} "}
     ],
     "top_p": 1,
     "temperature": 0.85,
@@ -40,10 +40,14 @@ export const generateAiResponse = async (
     return { code: 400, message: "Prompt cannot be empty" };
   }
   if (vibe === undefined || vibe === null) {
-    return { code: 400, message: "Vibe cannot be empty" };
+    return { code: 400, message: "Mode cannot be empty" };
   }
   if (gitInfo === undefined ||gitInfo === null) {
     return { code: 400, message: "Github Username cannot be empty" };
+  }
+
+  if (model === undefined || model === null) {
+    return { code: 400, message: "Error selecting AI model" };
   }
 
   if (model === null || model === undefined) {
