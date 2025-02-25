@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "../../style/globals.css";
 import { Navbar } from "../../components/navbar";
 import { Footer } from "@/components/footer";
-import Head from "next/head";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,6 +11,17 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "RepoPilot - AI-Powered GitHub Bio Generator",
   description: "Generate professional and engaging GitHub bios with RepoPilot. Powered by LLaMA and Mistral AI, create customized profiles instantly with AI-driven insights.",
+  authors: [
+    {
+      name: "Santosh Phadtare",
+      url: "https://santoshphadtare.me",
+    },
+    {
+      name: "RepoPilot",
+      url: "https://repopilot.vercel.app",
+    }
+  ],
+  creator: "Santosh Phadtare",
   keywords: "GitHub bio generator, AI GitHub bio, RepoPilot, LLaMA AI, Mistral AI, developer profile generator, GitHub profile AI",
   openGraph: {
     title: "RepoPilot - AI-Powered GitHub Bio Generator",
@@ -40,11 +50,7 @@ export const metadata: Metadata = {
       },
     ]
   },
-  icons: {
-    icon: "/favicon.ico",
-  }
 };
-
 
 export default function RootLayout({
   children,
@@ -53,14 +59,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head >
-      <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <body className={`${inter.className}  antialiased `}>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={`${inter.className} antialiased`}>
         <nav className="mb-12">
-        <Navbar  />
+          <Navbar />
         </nav>
-        <div className="min-w-full h-auto py-1.5 overflow-clip">{children}</div>
+        <div className="min-w-full h-auto py-1.5 overflow-clip">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
