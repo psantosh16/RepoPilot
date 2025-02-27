@@ -1,12 +1,10 @@
-"use client";
-
-import React, { use, useEffect } from "react";
-import BioGenerator from "./user-textarea";
-import { Switcher } from "./ai-switcher";
-import { useMode } from "@/context/mode_context";
-import { Mode } from "@/types/mode";
-import { HeroText } from "./hero-text";
-import { RoastModeForm } from "./roast_mode/roast_mode_form";
+'use client';
+import BioGenerator from './user-textarea';
+import { Switcher } from './ai-switcher';
+import { useMode } from '@/context/mode_context';
+import { Mode } from '@/types/mode';
+import { HeroText } from './hero-text';
+import { RoastModeForm } from './roast_mode/roast_mode_form';
 
 export const ModeToggleWrapper = () => {
   const { mode } = useMode();
@@ -19,8 +17,8 @@ export const ModeToggleWrapper = () => {
           <BioGenerator />
         </div>
       ) : (
-          <div className="w-screen">
-            <RoastModeForm  />
+        <div className="w-screen">
+          <RoastModeForm />
         </div>
       )}
     </div>
