@@ -1,4 +1,4 @@
 export enum Mode {
-    NORMAL = "NORMAL",
-    ROAST = "ROAST",
-};
+  NORMAL = 'NORMAL',
+  ROAST = 'ROAST',
+}
