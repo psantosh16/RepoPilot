@@ -7,19 +7,18 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export const Switcher = () => {
-  const [enabled, setEnabled] = useState<Intelligence>(Intelligence.LLAMA);
+  const [enabled, setEnabled] = useState<Intelligence>(Intelligence.MISTRAL);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       localStorage.setItem("agent", enabled);
-      // console.log("Switched to", enabled);
     }, 300);
 
     return () => clearTimeout(timeoutId);
   },[enabled]);
 
   return (
-    <div className="flex gap-x-4 items-center justify-center">
+    <div  id="ai_model_switcher" className="flex gap-x-4 items-center justify-center">
       <h3 className={cn(enabled === Intelligence.LLAMA ? "text-black font-semibold" : "text-black/40 opacity-60", "flex items-center gap-x-2")}>
         <Image src="/icons/llama.webp"  alt="llama icon" className="w-8 md:w-12"  width={100} height={100}/>
         llama 70b

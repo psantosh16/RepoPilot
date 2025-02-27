@@ -1,12 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Shadows_Into_Light,Pixelify_Sans } from "next/font/google";
 import "../../style/globals.css";
 import { Navbar } from "../../components/navbar";
 import { Footer } from "@/components/footer";
+import { ModeProvider } from "@/context/mode_context";
 
 const inter = Inter({
   subsets: ["latin"],
 });
+
+const shadowsIntoLight = Shadows_Into_Light({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400"],
+});
+
+const pixelifySans = Pixelify_Sans({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400"],
+});
+
+
 
 export const metadata: Metadata = {
   title: "RepoPilot - AI-Powered GitHub Bio Generator",
@@ -63,11 +76,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <nav className="mb-12">
+        <nav className="sticky top-0 z-50 w-full h-auto bg-white shadow-sm">
           <Navbar />
         </nav>
         <div className="min-w-full h-auto py-1.5 overflow-clip">
-          {children}
+          <ModeProvider>{children}</ModeProvider>
         </div>
         <Footer />
       </body>
