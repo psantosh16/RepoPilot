@@ -1,4 +1,4 @@
 export enum Intelligence {
-    LLAMA = "LLAMA",
-    MISTRAL = "MISTRAL",
+  LLAMA = 'LLAMA',
+  MISTRAL = 'MISTRAL',
 }
