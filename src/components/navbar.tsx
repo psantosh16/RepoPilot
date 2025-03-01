@@ -6,7 +6,7 @@ export const Navbar = () => {
     <div className="min-w-full h-auto py-1.5 px-4 border-b border-gray-200">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <div className="font-bold text-xl">RepoPilot AI</div>
+          <div className="font-bold text-xl">Suntosh | RepoPilot AI</div>
         </div>
         <div className="flex items-center">
           <Link
